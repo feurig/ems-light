@@ -5,21 +5,8 @@
       location = "group:Arduino"
       name = "Arduino">
       <Group
-         location = "group:bin"
-         name = "bin">
-         <FileRef
-            location = "group:build.sh">
-         </FileRef>
-         <FileRef
-            location = "group:load.sh">
-         </FileRef>
-         <FileRef
-            location = "group:README_Load.txt">
-         </FileRef>
-      </Group>
-      <Group
-         location = "group:ems"
-         name = "ems">
+         location = "group:ems-light"
+         name = "ems-light">
          <FileRef
             location = "group:Clock.cpp">
          </FileRef>
@@ -30,10 +17,7 @@
             location = "group:Common.h">
          </FileRef>
          <FileRef
-            location = "group:ems.ino">
-         </FileRef>
-         <FileRef
-            location = "group:Heater.h">
+            location = "group:ems-light.ino">
          </FileRef>
          <FileRef
             location = "group:keywords.h">
@@ -51,9 +35,6 @@
             location = "group:Monitor.h">
          </FileRef>
          <FileRef
-            location = "group:Pump.h">
-         </FileRef>
-         <FileRef
             location = "group:SafetyThird.cpp">
          </FileRef>
          <FileRef
@@ -62,11 +43,34 @@
          <FileRef
             location = "group:TaskScheduler.h">
          </FileRef>
+      </Group>
+      <Group
+         location = "group:ems-templates"
+         name = "ems-templates">
+         <FileRef
+            location = "group:Heater.h">
+         </FileRef>
+         <FileRef
+            location = "group:Pump.h">
+         </FileRef>
          <FileRef
             location = "group:Thermocouple.cpp">
          </FileRef>
          <FileRef
             location = "group:Thermocouple.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:bin"
+         name = "bin">
+         <FileRef
+            location = "group:build.sh">
+         </FileRef>
+         <FileRef
+            location = "group:load.sh">
+         </FileRef>
+         <FileRef
+            location = "group:README_Load.txt">
          </FileRef>
       </Group>
       <Group

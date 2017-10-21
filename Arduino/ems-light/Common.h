@@ -71,36 +71,3 @@
 
 #define FAKE_A_FLOAT(_f) int((_f)), int(abs((_f) - int(_f))*100)
 
-// This stuff probably belongs in Machine.h
-
-#define STATENAMELEN 25
-
-enum machine_states {
-    STATE_OFF,
-    STATE_SELF_TEST_INIT,
-    STATE_WARM_UP,
-    STATE_RUN_MODE,
-    STATE_SHUTDOWN,
-    STATE_POST_FAILURE,
-    STATE_E_SHUTDOWN,
-    STATE_MANUAL_MODE,
-    STATE_DIAGNOSTICS_MODE,
-    STATE_UNKNOWN_STATE,
-};
-
-#define NSTATES (STATE_UNKNOWN_STATE)
-
-#define STATENAMES \
-"OFF\000              ",\
-"SELF TEST INIT\000   ",\
-"WARMUP\000           ",\
-"NORMAL OPERATION\000 ",\
-"SHUT DOWN\000        ",\
-"POST FAILURE\000     ",\
-"EMERGENCY STOP\000   ",\
-"MANUAL MODE          ",\
-"DIAGNOSTICS MODE\000 ",\
-"UNKNOWN\000          "
-
-#endif  // EMS_COMMON_H
-
