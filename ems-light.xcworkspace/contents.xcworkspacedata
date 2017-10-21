@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:Arduino"
+      name = "Arduino">
+      <Group
+         location = "group:bin"
+         name = "bin">
+         <FileRef
+            location = "group:build.sh">
+         </FileRef>
+         <FileRef
+            location = "group:load.sh">
+         </FileRef>
+         <FileRef
+            location = "group:README_Load.txt">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:ems"
+         name = "ems">
+         <FileRef
+            location = "group:Clock.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Clock.h">
+         </FileRef>
+         <FileRef
+            location = "group:Common.h">
+         </FileRef>
+         <FileRef
+            location = "group:ems.ino">
+         </FileRef>
+         <FileRef
+            location = "group:Heater.h">
+         </FileRef>
+         <FileRef
+            location = "group:keywords.h">
+         </FileRef>
+         <FileRef
+            location = "group:Machine.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Machine.h">
+         </FileRef>
+         <FileRef
+            location = "group:Monitor.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Monitor.h">
+         </FileRef>
+         <FileRef
+            location = "group:Pump.h">
+         </FileRef>
+         <FileRef
+            location = "group:SafetyThird.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:SafetyThird.h">
+         </FileRef>
+         <FileRef
+            location = "group:TaskScheduler.h">
+         </FileRef>
+         <FileRef
+            location = "group:Thermocouple.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Thermocouple.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:libraries"
+         name = "libraries">
+         <Group
+            location = "group:Adafruit-MAX31855"
+            name = "Adafruit-MAX31855">
+         </Group>
+         <Group
+            location = "group:Adafruit_SleepyDog"
+            name = "Adafruit_SleepyDog">
+         </Group>
+         <FileRef
+            location = "group:readme.txt">
+         </FileRef>
+         <Group
+            location = "group:RTCZero"
+            name = "RTCZero">
+         </Group>
+      </Group>
+   </Group>
+   <Group
+      location = "group:console"
+      name = "console">
+      <FileRef
+         location = "group:consoleFrame.py">
+      </FileRef>
+      <FileRef
+         location = "group:dn.png">
+      </FileRef>
+      <FileRef
+         location = "group:EMS.py">
+      </FileRef>
+      <FileRef
+         location = "group:EMSConsole.py">
+      </FileRef>
+      <FileRef
+         location = "group:images.py">
+      </FileRef>
+      <FileRef
+         location = "group:pause.png">
+      </FileRef>
+      <FileRef
+         location = "group:play.png">
+      </FileRef>
+      <FileRef
+         location = "group:up.png">
+      </FileRef>
+      <FileRef
+         location = "group:wizard.py">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:docs"
+      name = "docs">
+      <FileRef
+         location = "group:EMS.docx">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:ems.sh">
+   </FileRef>
+   <Group
+      location = "group:hardware"
+      name = "hardware">
+      <FileRef
+         location = "group:M0FeatherSIC.brd">
+      </FileRef>
+      <FileRef
+         location = "group:M0FeatherSIC.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:M0FeatherSIC.sch">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <Group
+      location = "group:utilities"
+      name = "utilities">
+      <FileRef
+         location = "group:genkeys.py">
+      </FileRef>
+   </Group>
+</Workspace>
