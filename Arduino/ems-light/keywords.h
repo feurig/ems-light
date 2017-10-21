@@ -61,60 +61,57 @@
 "RST[!  ]Reboot          "\
 "BLD[!  ]Reboot to loader"\
 "STP[!:?]Sim/Chk  E-Stop "\
-"LCS[!:?]Light Curt. Stop"\
-"LCR[!: ]Light Curt. Rst "\
+"CMD[!:?]Command Mode    "\
 "NOW[!:?]Time as an int  "\
 "TIM[!:?]Time for humans "\
-"TS1[ :?]Temp Sensor 1   "\
-"TS2[ :?]Temp Sensor 2   "\
-"TMP[ :?]Temp Setting    "\
-"AMT[ :?]Ambient Temp    "\
-"AMH[ :?]Ambient Humidity"\
-"RED[!: ]Led (0-255)     "\
-"HSW[!:?]Heaters (ON/OFF)"\
-"H1S[!:?]Heater 1(ON/OFF)"\
-"H1V[!:?]Heater 1 (0-255)"\
-"H1P[!:?]Heater 1 P value"\
-"H1I[!:?]Heater 1 I value"\
-"H1D[!:?]Heater 1 D value"\
-"H2S[!:?]Heater 1(ON/OFF)"\
-"H2V[!:?]Heater 1 (0-255)"\
-"H2P[!:?]Heater 2 P value"\
-"H2I[!:?]Heater 2 I value"\
-"H2D[!:?]Heater 2 D value"\
-"PMS[!:?]Pump Sw (ON/OFF)"\
-"PSP[ :?]Pressure P value"\
-"PSI[ :?]Pressure I value"\
-"PSD[ :?]Pressure D value"\
-"PS1[ :?]Pressure Sensor "\
-"MUP[!: ]Manual up       "\
-"MDN[!: ]Manual down     "\
-"TMS[!:?]Timer setting   "\
-"TMR[!:?]Timer Run(ON/OF)"\
-"TRM[ :?]Time Remaining  "\
-"SOL[!:?]Solenoid(ON/OFF)"\
-"HOM[ :?]Home Switch     "\
-"CMD[!:?]Command Mode    "\
 "MLD[!:?]Enable Multiline"\
 "SOD[!: ]Start Multiline "\
 "EOD[!: ]End Multiline   "\
+"RED[!: ]Led (0-255)     "\
+"AMT[ :?]Ambient Temp    "\
+"AMH[ :?]Ambient Humidity"\
+"PX1[ :?]Proximity Sense "\
+"AD1[ :?]Analog Input 1"\
+"AD2[ :?]Analog Input 2"\
+"AD3[ :?]Analog Input 3"\
+"AD4[ :?]Analog Input 4"\
+"AD5[ :?]Analog Input 5"\
+"AD6[ :?]Analog Input 6"\
+"AD7[ :?]Analog Input 7"\
+"AD8[ :?]Analog Input 8"\
+"DI1[ :?]Digital Input 1"\
+"DI2[ :?]Digital Input 2"\
+"DI3[ :?]Digital Input 3"\
+"DI4[ :?]Digital Input 4"\
+"DI5[ :?]Digital Input 5"\
+"DI6[ :?]Digital Input 6"\
+"DI7[ :?]Digital Input 7"\
+"DI8[ :?]Digital Input 8"\
+"DO1[!:?]Digital Output 1"\
+"DO2[!:?]Digital Output 2"\
+"DO3[!:?]Digital Output 3"\
+"DO4[!:?]Digital Output 4"\
+"DO5[!:?]Digital Output 5"\
+"DO6[!:?]Digital Output 6"\
+"DO7[!:?]Digital Output 7"\
+"DO8[!:?]Digital Output 8"\
 "NOP[!: ]Not implemented"
 
 
 #define KEYWORDS \
 "SYN" "ACK" "NAK" "SWV" "HWV" "GIT" "MEM" "SSN" "HLP" "FTL" "ALT" "WAR" "INF" \
-"DBG" "LOG" "STC" "DVL" "LVL" "RST" "BLD" "STP" "LCS" "LCR" "NOW" "TIM" "TS1" \
-"TS2" "TMP" "AMT" "AMH" "RED" "HSW" "H1S" "H1V" "H1P" "H1I" "H1D" "H2S" "H2V" \
-"H2P" "H2I" "H2D" "PMS" "PSP" "PSI" "PSD" "PS1" "MUP" "MDN" "TMS" "TMR" "TRM" \
-"SOL" "HOM" "CMD" "MLD" "SOD" "EOD" "NOP" 
+"DBG" "LOG" "STC" "DVL" "LVL" "RST" "BLD" "STP" "CMD" "NOW" "TIM" "MLD" "SOD" \
+"EOD" "RED" "AMT" "AMH" "PX1" "AD1" "AD2" "AD3" "AD4" "AD5" "AD6" "AD7" "AD8" \
+"DI1" "DI2" "DI3" "DI4" "DI5" "DI6" "DI7" "DI8" "DO1" "DO2" "DO3" "DO4" "DO5" \
+"DO6" "DO7" "DO8" "NOP" 
 
 
 enum keywordIndex {
 _SYN_,_ACK_,_NAK_,_SWV_,_HWV_,_GIT_,_MEM_,_SSN_,_HLP_,_FTL_,_ALT_,_WAR_,_INF_,
-_DBG_,_LOG_,_STC_,_DVL_,_LVL_,_RST_,_BLD_,_STP_,_LCS_,_LCR_,_NOW_,_TIM_,_TS1_,
-_TS2_,_TMP_,_AMT_,_AMH_,_RED_,_HSW_,_H1S_,_H1V_,_H1P_,_H1I_,_H1D_,_H2S_,_H2V_,
-_H2P_,_H2I_,_H2D_,_PMS_,_PSP_,_PSI_,_PSD_,_PS1_,_MUP_,_MDN_,_TMS_,_TMR_,_TRM_,
-_SOL_,_HOM_,_CMD_,_MLD_,_SOD_,_EOD_,_NOP_};
+_DBG_,_LOG_,_STC_,_DVL_,_LVL_,_RST_,_BLD_,_STP_,_CMD_,_NOW_,_TIM_,_MLD_,_SOD_,
+_EOD_,_RED_,_AMT_,_AMH_,_PX1_,_AD1_,_AD2_,_AD3_,_AD4_,_AD5_,_AD6_,_AD7_,_AD8_,
+_DI1_,_DI2_,_DI3_,_DI4_,_DI5_,_DI6_,_DI7_,_DI8_,_DO1_,_DO2_,_DO3_,_DO4_,_DO5_,
+_DO6_,_DO7_,_DO8_,_NOP_};
 
 // use enum to determine the size of the keyword arrays.
 #define NKEYWORDS  _NOP_ + 1
