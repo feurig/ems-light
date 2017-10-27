@@ -4,7 +4,7 @@
 #ifndef PUMP_H
 #define PUMP_H
 
-#include "Common.h"
+#include "Configuration.h"
 #include "TaskScheduler.h"
 #include "Monitor.h"
 #include "Machine.h"

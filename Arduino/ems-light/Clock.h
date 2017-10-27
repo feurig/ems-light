@@ -36,7 +36,7 @@
 #ifndef Clock_h
 #define Clock_h
 
-#include "Common.h"
+#include "Configuration.h"
 #include "Monitor.h"
 #include "TaskScheduler.h"
 

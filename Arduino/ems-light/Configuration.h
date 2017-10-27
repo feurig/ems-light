@@ -16,33 +16,18 @@
 #define FIRMWAREREV "EMS1"
 #endif
 
-#define LAMP_PIN   13
-#define TS1_CS_PIN 19
-#define TS2_CS_PIN 18
-#define PS1_APIN    1
-
-#define POWER_PIN  17
-
-#define E_STOP_PIN 16
-#define E_STOP_PULLED HIGH
-#define E_STOP_OK HIGH
-
-#define OSDD_PIN    5
-#define LIGHT_CURTAIN_OK LOW
-#define CURTAIN_NOT_CLEAR HIGH
-
-#define LAMP_PIN   13
-#define HTR1_PIN   11
-#define HTR2_PIN   12
-#define PUMP_PIN   10
-#define START_PIN   6
-#define OK_TO_START LOW
-#define SOLENOID_PIN 9
-#define RELAY_6_PIN 14
-
-#define K1_PIN     14
-#define KONTACTOR_OFF LOW
-#define KONTACTOR_ON  HIGH
+#define SAFETY_LAMP_PIN   13
+//
+// Define E_STOP_PIN to enable estop switch
+//
+//#define E_STOP_PIN x
+#ifndef E_STOP_PULLED
+#define E_STOP_PULLED 1
+#endif
+//
+// Define K1_PIN if konactor is connected to machine
+//
+//#define K1_PIN x
 
 // 
 #define POST_TIMESTAMP_DELIMETER ','
@@ -60,14 +45,10 @@
 #define DEBUG_LEVEL_EEPROM_ADDR ((uint8_t*) 3)
 
 
-#define DEFAULT_HEATER_SETPOINT 260.00
-#define DEFAULT_TIMER_SETPOINT 150
-
 
 #define MONITOR_UART Serial
 #define MONITOR_BAUD 9600
-//#define LOGGER_UART Serial1
-//#define LOGGER_BAUD 9600
 
 #define FAKE_A_FLOAT(_f) int((_f)), int(abs((_f) - int(_f))*100)
 
+#endif

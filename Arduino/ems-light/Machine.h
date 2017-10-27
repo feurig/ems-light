@@ -1,6 +1,6 @@
 #ifndef Machine_h
 #define Machine_h
-#include "Common.h"
+#include "Configuration.h"
 #include "Monitor.h"
 #include "TaskScheduler.h"
 // This stuff probably belongs in Machine.h
@@ -33,9 +33,6 @@ enum machine_states {
 "MANUAL MODE          ",\
 "DIAGNOSTICS MODE\000 ",\
 "UNKNOWN\000          "
-
-#endif  // EMS_COMMON_H
-
 
 class Machine;
 extern Machine machine;

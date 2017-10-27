@@ -12,7 +12,7 @@
 #include <SPI.h>
 #include "Adafruit_MAX31855.h"
 
-#include "Common.h"
+#include "Configuration.h"
 #include "TaskScheduler.h"
 #include "Monitor.h"
 #include "Machine.h"

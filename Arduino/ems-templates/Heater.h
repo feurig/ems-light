@@ -6,14 +6,14 @@
  #ifndef HEATER_H
  #define HEATER_H
 
-#include "Common.h"
+#include "Configuration.h"
 #include "TaskScheduler.h"
 #include "Monitor.h"
 #include "Machine.h"
 
 #include "Thermocouple.h"
 
-// move to common.h
+// move to Configuration.h
 
 #define HEATER_OFF 0
 #define HEATER_OUT_MAX 255

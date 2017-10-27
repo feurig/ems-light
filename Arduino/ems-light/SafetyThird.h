@@ -11,26 +11,26 @@
  * Copyright (c) 2016, Donald Delmar Davis, Suspect Devices
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  * this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright notice, 
- * this list of conditions and the following disclaimer in thedocumentation 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in thedocumentation
  * and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *-----------------------------------------------------------------------------*/
 /*
@@ -47,20 +47,13 @@
 #define SafetyThird_h
 
 
-#include "Common.h"
+#include "Configuration.h"
 #include "Monitor.h"
 
 class SafetyThird;
 extern SafetyThird safety;
-#if 0
-#define SAFE_STATE_TO_RUN(S) (\
-(S)==STATE_SELF_TEST_INIT\
-||(S)==STATE_WARM_UP||\
-(S)==STATE_NORMAL_OPERATION\
-)
-#else
-#define SAFE_STATE_TO_RUN(S) machine.inSafeStateToRun
-#endif
+#define RED_FULL_ON (255 * (1 << (ANALOG_WRITE_RESOLUTION - 8)))
+#define RED_OFF 0
 
 // preprocessor logic for core specific WDT implimentation here....
 #include <Adafruit_SleepyDog.h>
@@ -68,110 +61,84 @@ extern SafetyThird safety;
 static void RED (uint8_t kwIndex, uint8_t verb,char *args) ;
 
 class SafetyThird {
-
-  private:
+    
+private:
     bool _eStop;
     bool _prevEStop;
-    bool _prevLightCurtain;
-    
+    // put the contactor variables back here
+    // mebby look at the light curtain as well
     Task _doDoRunRun;
     
-  public:
-
-    bool _lightCurtain;
-    bool _lightCurtainReset;
-
-    static void LCS(uint8_t kwIndex, uint8_t verb, char *args) {
-        safety.first();
-        monitor.update("LCS","%s",safety._lightCurtain?"ON":"OFF");
-    }
-    
-    static void LCR(uint8_t kwIndex, uint8_t verb, char *args) {
-        if (verb=='!') {
-            safety._lightCurtainReset = (atoi(args));
-            digitalWrite(START_PIN,safety._lightCurtainReset);
-        }
-        safety.first();
-        monitor.update("LCR","%s",safety._lightCurtainReset?"ON":"OFF");
-    }
+public:
     
     static void run() {safety.first();}
     
     void first () { // could also be called paranoia.
-#ifdef CAN_READ_ESTOP
+
+#ifdef E_STOP_PIN
         _eStop = (digitalRead(E_STOP_PIN)==E_STOP_PULLED );
-#else 
-        _eStop = ! E_STOP_PULLED;
+#else
+        _eStop = false;
 #endif
-        _lightCurtain = (digitalRead(OSDD_PIN) == CURTAIN_NOT_CLEAR);
-        int state = machine.state();
-        if ((SAFE_STATE_TO_RUN (state))
-            && !(_eStop)
-            && !(_lightCurtain)
+        if ((machine.inSafeStateToRun)
+            && (_eStop)
             )
         {
-            if (!_prevEStop){
-                monitor.update("STP","0 E-STOP Released: Contactors are ON");
-            }
-            if (!_prevLightCurtain){
-                monitor.update("LCS","1 WORK AREA CLEARED: Contactors are ON");
-            }
-            
-            digitalWrite(K1_PIN,KONTACTOR_ON);
+            monitor.update("STP","1 ESTOP Pushed: Initiating Emergency Stop");
+            machine.setState(STATE_E_SHUTDOWN);
         }
-        if (_eStop){
-            digitalWrite(K1_PIN,KONTACTOR_OFF); // in most cases this would already be done
-            if (!_prevEStop){
+        if (_eStop!=_prevEStop) {
+            _eStop = _prevEStop;
+            if (_eStop){
+                // probably should warn or alert!
                 monitor.update("STP","1 ESTOP Pushed: Contactors are OFF");
-            // fatal....
-        
-            }
-        }
-        if (_lightCurtain) {
-            digitalWrite(K1_PIN,KONTACTOR_OFF); // in most cases this would already be done
-            if(!_prevLightCurtain){
-                
-                monitor.update("LCS","1 WORK AREA NOT CLEAR: Contactors are OFF");
-            // safety pause
-        
+#ifdef K1_PIN
+                digitalWrite(K1_PIN,KONTACTOR_OFF);
+#endif
+            } else {
+                monitor.update("STP","0 E-STOP Released: Contactors are ON");
+#ifdef K1_PIN
+                digitalWrite(K1_PIN,KONTACTOR_ON);
+#endif
             }
         }
         
         _prevEStop=_eStop;
-        _prevLightCurtain=_lightCurtain;
     }
-    
-    uint8_t redLed; // red led value prolly bad style
+    uint redLightVal; // red led value prolly bad style
+
+    void redLight(int newVal) {
+        if(newVal!=redLightVal) {
+            redLightVal=newVal;
+            monitor.update("RED","%d",redLightVal);
+        }
+#ifdef SAFETY_LAMP_PIN
+        analogWrite(SAFETY_LAMP_PIN, safety.redLightVal * (1 << (ANALOG_WRITE_RESOLUTION - 8) ) );
+#endif
+    }
 
     void init() {
+#ifdef E_STOP_PIN
         pinMode (E_STOP_PIN, INPUT_PULLUP);
-        pinMode (OSDD_PIN, INPUT_PULLUP);
-        pinMode (START_PIN, OUTPUT);
-        digitalWrite(START_PIN, OK_TO_START);
-        pinMode (K1_PIN, OUTPUT);
-        digitalWrite(K1_PIN, KONTACTOR_OFF);
-        
-      //  http://www.arduino.org/learning/reference/analogwriteresolution
-      analogWriteResolution(ANALOG_WRITE_RESOLUTION);
-      analogWrite(LAMP_PIN, redLed * (1 << (ANALOG_WRITE_RESOLUTION - 8) ) );
+#endif
 
+        //  Might move this to machine or other more generic place.
+        //  http://www.arduino.org/learning/reference/analogwriteresolution
+        analogWriteResolution(ANALOG_WRITE_RESOLUTION);
+        
+        redLight(redLightVal=RED_OFF);
         _doDoRunRun.set(77L, TASK_FOREVER, &run);
         machine.todolist.addTask(_doDoRunRun);
         _doDoRunRun.enable();
-
+        
         monitor.registerAction(_RED_, &RED);
-        monitor.registerAction(_LCS_, &LCS);
-        monitor.registerAction(_LCR_, &LCR);
     }
-//    bool cleanShutdown(); // let modules know if we are starting normally
-//    void everythingOff();
-//    void run();
 };
 
-
 static void RED (uint8_t kwIndex, uint8_t verb,char *args) {
-  safety.redLed = atol(args);
-  analogWrite(LAMP_PIN, safety.redLed * (1 << (ANALOG_WRITE_RESOLUTION - 8) ) );
+    // monitor update?
+    safety.redLight(atol(args));
+
 }
 
 

@@ -48,10 +48,10 @@
 #ifndef Monitor_h
 #define Monitor_h
 
-#include "Common.h"
+#include "Configuration.h"
 class Monitor;
 extern Monitor monitor;
-
+//#include "Clock.h"
 #include "Machine.h"
 #include "Adafruit_SleepyDog.h"
 #include "Reset.h"
@@ -110,7 +110,6 @@ class Monitor
 
 
   public:
-//    Stream * console;
     char * lookupKey(int ndx);
 
     static char *keyword(int ndx);
@@ -162,14 +161,22 @@ class Monitor
     }
     
     static void RST(uint8_t kwIndex, uint8_t verb, char *args) {
-        monitor.warn("Rebooting!");
-        MONITOR_UART.end();
-        Watchdog.enable(150);
+        if (verb=='!') {
+            monitor.warn("Rebooting!");
+            MONITOR_UART.end();
+            Watchdog.enable(150);
+        } else {
+            monitor.update("NAK","RST Requires verb!");
+        }
     }
     
     static void BLD(uint8_t kwIndex, uint8_t verb, char *args) {
-        monitor.warn("Jumping to Bootloader!");
-        initiateReset(10);
+        if (verb=='!') {
+            monitor.warn("Jumping to Bootloader!");
+            initiateReset(10);
+        } else {
+            monitor.update("NAK","BLD Requires verb!");
+        }
     }
     
     // stubb

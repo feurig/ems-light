@@ -39,7 +39,7 @@
 #define keywords_h
 
 
-#define HELPTEXT\
+#define HELPTEXT \
 "SYN[!  ]sync (hello)    "\
 "ACK[ : ]acknowlege(yes) "\
 "NAK[ : ]negative (no)   "\
@@ -71,22 +71,22 @@
 "AMT[ :?]Ambient Temp    "\
 "AMH[ :?]Ambient Humidity"\
 "PX1[ :?]Proximity Sense "\
-"AD1[ :?]Analog Input 1"\
-"AD2[ :?]Analog Input 2"\
-"AD3[ :?]Analog Input 3"\
-"AD4[ :?]Analog Input 4"\
-"AD5[ :?]Analog Input 5"\
-"AD6[ :?]Analog Input 6"\
-"AD7[ :?]Analog Input 7"\
-"AD8[ :?]Analog Input 8"\
-"DI1[ :?]Digital Input 1"\
-"DI2[ :?]Digital Input 2"\
-"DI3[ :?]Digital Input 3"\
-"DI4[ :?]Digital Input 4"\
-"DI5[ :?]Digital Input 5"\
-"DI6[ :?]Digital Input 6"\
-"DI7[ :?]Digital Input 7"\
-"DI8[ :?]Digital Input 8"\
+"AD1[ :?]Analog Input 1  "\
+"AD2[ :?]Analog Input 2  "\
+"AD3[ :?]Analog Input 3  "\
+"AD4[ :?]Analog Input 4  "\
+"AD5[ :?]Analog Input 5  "\
+"AD6[ :?]Analog Input 6  "\
+"AD7[ :?]Analog Input 7  "\
+"AD8[ :?]Analog Input 8  "\
+"DI1[ :?]Digital Input 1 "\
+"DI2[ :?]Digital Input 2 "\
+"DI3[ :?]Digital Input 3 "\
+"DI4[ :?]Digital Input 4 "\
+"DI5[ :?]Digital Input 5 "\
+"DI6[ :?]Digital Input 6 "\
+"DI7[ :?]Digital Input 7 "\
+"DI8[ :?]Digital Input 8 "\
 "DO1[!:?]Digital Output 1"\
 "DO2[!:?]Digital Output 2"\
 "DO3[!:?]Digital Output 3"\
@@ -95,7 +95,10 @@
 "DO6[!:?]Digital Output 6"\
 "DO7[!:?]Digital Output 7"\
 "DO8[!:?]Digital Output 8"\
-"NOP[!: ]Not implemented"
+"TMS[!:?]Timer Set       "\
+"TMR[!:?]Timer Run(ing)  "\
+"TRM[!:?]Time Remaining  "\
+"NOP[!: ]Not implemented "
 
 
 #define KEYWORDS \
@@ -103,7 +106,7 @@
 "DBG" "LOG" "STC" "DVL" "LVL" "RST" "BLD" "STP" "CMD" "NOW" "TIM" "MLD" "SOD" \
 "EOD" "RED" "AMT" "AMH" "PX1" "AD1" "AD2" "AD3" "AD4" "AD5" "AD6" "AD7" "AD8" \
 "DI1" "DI2" "DI3" "DI4" "DI5" "DI6" "DI7" "DI8" "DO1" "DO2" "DO3" "DO4" "DO5" \
-"DO6" "DO7" "DO8" "NOP" 
+"DO6" "DO7" "DO8" "TMS" "TMR" "TRM" "NOP"
 
 
 enum keywordIndex {
@@ -111,7 +114,7 @@ _SYN_,_ACK_,_NAK_,_SWV_,_HWV_,_GIT_,_MEM_,_SSN_,_HLP_,_FTL_,_ALT_,_WAR_,_INF_,
 _DBG_,_LOG_,_STC_,_DVL_,_LVL_,_RST_,_BLD_,_STP_,_CMD_,_NOW_,_TIM_,_MLD_,_SOD_,
 _EOD_,_RED_,_AMT_,_AMH_,_PX1_,_AD1_,_AD2_,_AD3_,_AD4_,_AD5_,_AD6_,_AD7_,_AD8_,
 _DI1_,_DI2_,_DI3_,_DI4_,_DI5_,_DI6_,_DI7_,_DI8_,_DO1_,_DO2_,_DO3_,_DO4_,_DO5_,
-_DO6_,_DO7_,_DO8_,_NOP_};
+_DO6_,_DO7_,_DO8_,_TMS_,_TMR_,_TRM_,_NOP_};
 
 // use enum to determine the size of the keyword arrays.
 #define NKEYWORDS  _NOP_ + 1

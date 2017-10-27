@@ -1,9 +1,7 @@
 #include "Machine.h"
 #include "Monitor.h"
-#include "Thermocouple.h"
+#include "Clock.h"
 #include "SafetyThird.h"
-#include "Heater.h"
-#include "Pump.h"
 
 const char statenames[][STATENAMELEN]={STATENAMES};
 Machine machine;
@@ -20,9 +18,9 @@ void Machine::init(){
     inSafeStateToRun=false;
     setState(STATE_SELF_TEST_INIT);
     safety.init();
-    thermocouple.init();
-    heater.init();
-    pump.init();
+    // thermocouple.init();
+    //heater.init();
+    //pump.init();
     if (state() == STATE_SELF_TEST_INIT) {
         inSafeStateToRun=true;
         setState(STATE_WARM_UP);
@@ -33,9 +31,9 @@ void Machine::init(){
     machineTask.set(500L, TASK_FOREVER, &systemInCharge);
     machine.todolist.addTask(machineTask);
     machineTask.enable();
-    monitor.registerAction(_TMR_, &TMR);
-    monitor.registerAction(_TMS_, &TMS);
-    monitor.registerAction(_TRM_, &TRM);
+    //monitor.registerAction(_TMR_, &TMR);
+    //monitor.registerAction(_TMS_, &TMS);
+    //monitor.registerAction(_TRM_, &TRM);
 
 }
 
@@ -64,38 +62,15 @@ static void systemInCharge(){
         case STATE_SELF_TEST_INIT:break;
             
         case STATE_WARM_UP:
-#ifdef SKIP_WARM_UP
             if (ENTERING) {
-                monitor.log("-- STARTING_WARMUP -- (TS1=d.%.02d,TS2=d.%.02d"
-                            ,FAKE_A_FLOAT(thermocouple.getTemp1())
-                            ,FAKE_A_FLOAT(thermocouple.getTemp2())
-                            );
-                pump.Press();
-                heater.setPoint=DEFAULT_HEATER_SETPOINT;
-                heater.isOn=true;
-                safety.redLed=255;//fix number foo
-            }
-            if ((thermocouple.getTemp1() >= heater.setPoint)
-                ||(thermocouple.getTemp2() >= heater.setPoint)
-                ) {
-                monitor.log("-- WARMUP COMPLETE -- (TS1=d.%.02d,TS2=d.%.02d"
-                            ,FAKE_A_FLOAT(thermocouple.getTemp1())
-                            ,FAKE_A_FLOAT(thermocouple.getTemp2())
-                            );
-                pump.Release();
+                safety.redLightVal=255;//fix number foo
+            } else {
                 machine.setState(STATE_RUN_MODE);
             }
-#else
-            machine.setState(STATE_RUN_MODE);
-#endif
             break;
         case STATE_RUN_MODE:
             if (ENTERING) {
-                machine.timerIsRunning=false;
-                machine.timeRemaining=machine.timerSetting=DEFAULT_TIMER_SETPOINT;
-                monitor.update("TMS","%d",machine.timerSetting);
-                monitor.update("TRM","%d",machine.timeRemaining);
-                lastUpdate=clock.time();
+                 lastUpdate=clock.time();
             }
             time_t delta;
             delta=lastUpdate=(clock.time()-lastUpdate);
@@ -111,7 +86,7 @@ static void systemInCharge(){
             if ((machine.timeRemaining==0)
                 && machine.timerIsRunning
                 ){
-                pump.Release();
+                //pump.Release();
                 machine.timerIsRunning=false;
                 monitor.log("-- Job finished --");
                 machine.timeRemaining=machine.timerSetting;
@@ -124,6 +99,12 @@ static void systemInCharge(){
         case STATE_SHUTDOWN:
         case STATE_POST_FAILURE:
         case STATE_E_SHUTDOWN:
+            if (ENTERING) {
+                safety.redLightVal=255;//fix number foo
+            } else {
+                machine.setState(STATE_RUN_MODE);
+            }
+            break;
         case STATE_MANUAL_MODE:
         case STATE_DIAGNOSTICS_MODE:break;
         case STATE_UNKNOWN_STATE:break;
@@ -140,7 +121,7 @@ static void TMR (uint8_t kwIndex, uint8_t verb,char *args) {
         bool wasRunning=machine.timerIsRunning;
         bool start=machine.timerIsRunning=atoi(args);
         if (start) {
-            pump.Press();
+            //            pump.Press();
             monitor.log("-- Job Started --"); //if was notrunning?
         } else {
             if (wasRunning) {

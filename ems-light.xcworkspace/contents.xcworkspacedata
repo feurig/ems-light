@@ -14,7 +14,7 @@
             location = "group:Clock.h">
          </FileRef>
          <FileRef
-            location = "group:Common.h">
+            location = "group:/Users/don/Documents/2017/ems-light/Arduino/ems-light/Configuration.h">
          </FileRef>
          <FileRef
             location = "group:ems-light.ino">
