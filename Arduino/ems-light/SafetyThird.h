@@ -65,11 +65,34 @@ class SafetyThird {
 private:
     bool _eStop;
     bool _prevEStop;
+    bool _prevLightCurtain;
     // put the contactor variables back here
     // mebby look at the light curtain as well
     Task _doDoRunRun;
     
 public:
+
+    bool _lightCurtain;
+    bool _lightCurtainReset;
+
+#ifdef LIGHT_CURTAIN_START_PIN
+    static void LCS(uint8_t kwIndex, uint8_t verb, char *args) {
+        //
+        // set logic here
+        //
+        monitor.update("LCS","%s",safety._lightCurtain?"ON":"OFF");
+        safety.first();
+    }
+
+    static void LCR(uint8_t kwIndex, uint8_t verb, char *args) {
+        if (verb=='!') {
+            safety._lightCurtainReset = (atoi(args));
+            digitalWrite(LIGHT_CURTAIN_START_PIN,safety._lightCurtainReset);
+        }
+        safety.first();
+        monitor.update("LCR","%s",safety._lightCurtainReset?"ON":"OFF");
+    }
+#endif
     
     static void run() {safety.first();}
     
@@ -79,6 +102,12 @@ public:
         _eStop = (digitalRead(E_STOP_PIN)==E_STOP_PULLED );
 #else
         _eStop = false;
+#endif
+
+#ifdef LIGHT_CURTAIN_OSDD_PIN
+        _lightCurtain = (digitalRead(LIGHT_CURTAIN_OSDD_PIN) == LIGHT_CURTAIN_NOT_CLEAR);
+#else
+        _lightCurtain = false;
 #endif
         if ((machine.inSafeStateToRun)
             && (_eStop)
@@ -102,7 +131,22 @@ public:
 #endif
             }
         }
-        
+        //
+        // this is rough... Fix when there is hardware to test with
+        //
+        if(_lightCurtain!=_prevLightCurtain) {
+            if (_lightCurtain) {
+#ifdef K1_PIN
+                digitalWrite(K1_PIN,KONTACTOR_OFF);
+#endif
+            } else {
+#ifdef K1_PIN
+                digitalWrite(K1_PIN,KONTACTOR_OFF);
+#endif≥                
+            }
+            monitor.update("LCS","%s",_lightCurtain?"ON":"OFF");
+        }
+        _prevLightCurtain=_lightCurtain;
         _prevEStop=_eStop;
     }
     uint redLightVal; // red led value prolly bad style
@@ -125,6 +169,14 @@ public:
         //  Might move this to machine or other more generic place.
         //  http://www.arduino.org/learning/reference/analogwriteresolution
         analogWriteResolution(ANALOG_WRITE_RESOLUTION);
+#ifdef LIGHT_CURTAIN_RESET_PIN
+        _lightCurtainReset = true;
+        digitalWrite(LIGHT_CURTAIN_START_PIN,LIGHT_CURTAIN_START);
+#else
+        _lightCurtainReset = false;
+#endif
+        _prevLightCurtain=false;
+        _prevEStop=false;
         
         redLight(redLightVal=RED_OFF);
         _doDoRunRun.set(77L, TASK_FOREVER, &run);

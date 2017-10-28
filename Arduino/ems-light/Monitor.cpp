@@ -146,6 +146,7 @@ void Monitor::init(){
     
     clock.init(); // needed to timestamp debug statement.
     
+    registerAction(_SYN_, &ACK);
     registerAction(_DVL_, &DVL);
     registerAction(_GIT_, &GIT);
     registerAction(_HLP_, &HLP);

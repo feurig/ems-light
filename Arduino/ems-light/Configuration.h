@@ -24,6 +24,17 @@
 #ifndef E_STOP_PULLED
 #define E_STOP_PULLED 1
 #endif
+
+//
+// Define LIGHT_CURTAIN pins to enable light curtain
+//
+//#define LIGHT_CURTAIN_OSDD_PIN    5
+//#define LIGHT_CURTAIN_START_PIN   6
+#define LIGHT_CURTAIN_START LOW
+#define LIGHT_CURTAIN_STOP HIGH
+#define LIGHT_CURTAIN_OK LOW
+#define LIGHT_CURTAIN_NOT_CLEAR HIGH
+
 //
 // Define K1_PIN if konactor is connected to machine
 //
