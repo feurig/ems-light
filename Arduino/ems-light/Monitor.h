@@ -51,10 +51,13 @@
 #include "Configuration.h"
 class Monitor;
 extern Monitor monitor;
-//#include "Clock.h"
 #include "Machine.h"
+
+#ifdef ARDUINO_SAMD_ZERO
 #include "Adafruit_SleepyDog.h"
 #include "Reset.h"
+#endif
+
 
 #include "TaskScheduler.h"
 #include <stdio.h>

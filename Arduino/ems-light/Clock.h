@@ -46,8 +46,10 @@
 #define CHARS_IN_TIMESTAMP 20
 
 // add preprocessor code here for non M0 systems.
+#ifdef ARDUINO_SAMD_ZERO
 #include <RTCZero.h>
 extern RTCZero rtc;
+#endif
 
 // forward
 class Clock;
@@ -115,9 +117,9 @@ public:
     uint8_t dayofweek();
     void tick(void);
     void run(); // this is wrong.
-    bool rolledOver(); //??
-    void addToCalendar();
-    void removeFromCalendar();
+    //bool rolledOver(); //??
+    //void addToCalendar();
+    //void removeFromCalendar();
     void sync();
     void calcUnixTime();
 

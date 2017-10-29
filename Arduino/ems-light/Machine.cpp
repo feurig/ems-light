@@ -18,9 +18,6 @@ void Machine::init(){
     inSafeStateToRun=false;
     setState(STATE_SELF_TEST_INIT);
     safety.init();
-    // thermocouple.init();
-    //heater.init();
-    //pump.init();
     if (state() == STATE_SELF_TEST_INIT) {
         inSafeStateToRun=true;
         setState(STATE_WARM_UP);
@@ -31,9 +28,9 @@ void Machine::init(){
     machineTask.set(500L, TASK_FOREVER, &systemInCharge);
     machine.todolist.addTask(machineTask);
     machineTask.enable();
-    //monitor.registerAction(_TMR_, &TMR);
-    //monitor.registerAction(_TMS_, &TMS);
-    //monitor.registerAction(_TRM_, &TRM);
+    monitor.registerAction(_TMR_, &TMR);
+    monitor.registerAction(_TMS_, &TMS);
+    monitor.registerAction(_TRM_, &TRM);
 
 }
 
@@ -63,7 +60,7 @@ static void systemInCharge(){
             
         case STATE_WARM_UP:
             if (ENTERING) {
-                safety.redLightVal=255;//fix number foo
+                safety.redLightVal=RED_FULL_ON;//fix number foo
             } else {
                 machine.setState(STATE_RUN_MODE);
             }
@@ -121,8 +118,8 @@ static void TMR (uint8_t kwIndex, uint8_t verb,char *args) {
         bool wasRunning=machine.timerIsRunning;
         bool start=machine.timerIsRunning=atoi(args);
         if (start) {
-            //            pump.Press();
-            monitor.log("-- Job Started --"); //if was notrunning?
+            //
+            monitor.log("-- Job (Re)Started --"); //if was notrunning?
         } else {
             if (wasRunning) {
                 monitor.log("-- Job Paused --");

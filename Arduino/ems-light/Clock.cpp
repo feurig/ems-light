@@ -59,8 +59,9 @@
 /* Create an rtc object mebby should be private to the class JOE?? */
 
 // add preprocessor code here for non M0 systems.
+#ifdef ARDUINO_SAMD_ZERO
 RTCZero rtc;
-
+#endif
 /* calculate build date and time (this should be referenceable from monitor for SWV ... */
 const byte build_seconds = ((__TIME__[6] - '0') * 10 + __TIME__[7] - '0');
 const byte build_minutes = ((__TIME__[3] - '0') * 10 + __TIME__[4] - '0');
