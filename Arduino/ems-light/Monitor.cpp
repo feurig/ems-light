@@ -271,6 +271,39 @@ int getFreeMemory()
     
 }
 
+#ifdef ARDUINO_SAMD_ZERO
+#include "Adafruit_SleepyDog.h"
+#include "Reset.h"
+
+void jump2bootloader(){
+    initiateReset(10);
+}
+void reboot(){
+    Watchdog.enable(150);
+    for(;;);
+}
+#elif defined(ARDUINO_AVR_MICRO) || defined(ARDUINO_AVR_LEONARDO)
+#include <avr/wdt.h>
+#ifndef MAGIC_KEY
+#define MAGIC_KEY 0x7777
+#endif
+#ifndef MAGIC_KEY_POS
+#define MAGIC_KEY_POS 0x0800
+#endif
+void jump2bootloader(){
+    int16_t magic_key_pos = MAGIC_KEY_POS;
+    *(uint16_t *)magic_key_pos = MAGIC_KEY;
+    wdt_enable(WDTO_120MS);
+    for(;;);
+}
+void reboot(){
+    int16_t magic_key_pos = MAGIC_KEY_POS;
+    *(uint16_t *)magic_key_pos = 0;
+    wdt_enable(WDTO_120MS);
+    for(;;);
+    
+}
+#endif
 
 
 

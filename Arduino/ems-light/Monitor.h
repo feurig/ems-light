@@ -53,10 +53,8 @@ class Monitor;
 extern Monitor monitor;
 #include "Machine.h"
 
-#ifdef ARDUINO_SAMD_ZERO
-#include "Adafruit_SleepyDog.h"
-#include "Reset.h"
-#endif
+void jump2bootloader();
+void reboot();
 
 
 #include "TaskScheduler.h"
@@ -84,7 +82,6 @@ enum severityIndex {
 #define MAX_MONITOR_LINE_LENGTH (MAX_RETURN_VALUE-6)
 
 typedef void(*actionptr)(uint8_t, uint8_t, char *);
-//typedef void(actionfunc)(uint8_t, uint8_t, char *);
 
 extern char actionBuffer[MAX_RETURN_VALUE];
 extern actionptr actions[];
@@ -99,6 +96,7 @@ class Machine;
 extern Machine machine;
 extern int getFreeMemory();
 extern char commandBuffer[];
+
 
 class Monitor
 {
@@ -167,7 +165,7 @@ class Monitor
         if (verb=='!') {
             monitor.warn("Rebooting!");
             MONITOR_UART.end();
-            Watchdog.enable(150);
+            reboot();
         } else {
             monitor.update("NAK","RST Requires verb!");
         }
@@ -176,7 +174,7 @@ class Monitor
     static void BLD(uint8_t kwIndex, uint8_t verb, char *args) {
         if (verb=='!') {
             monitor.warn("Jumping to Bootloader!");
-            initiateReset(10);
+            jump2bootloader();
         } else {
             monitor.update("NAK","BLD Requires verb!");
         }
