@@ -29,23 +29,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *-----------------------------------------------------------------------------
  * The clock module is about time.
- * This includes 
+ * This includes
  * An RTC backed (if avaliable) time module for timestamps
- * A shcedular for most tasks. 
+ * A shcedular for most tasks.
  */
 
 #include "Monitor.h"
 #include "Clock.h"
 
 
-/* 
- * notes on sync weirdness. 
+/* FIX ME>>>>>
+ * notes on sync weirdness.
  *
  * This class grew out of a system which used external RTC that had to share
  * a buss with all sorts of sensors.
  *
- * Rather than hog the buss a running seconds count was maintained (unixtime) 
- * and the time variables were updated and the rtc referenced once a minute. 
+ * Rather than hog the buss a running seconds count was maintained (unixtime)
+ * and the time variables were updated and the rtc referenced once a minute.
  *
  * With an internal rtc this gets a little krufty.
  *
@@ -55,7 +55,7 @@
  * this is not currently implimented but we will leave the cruft so it can be.
  *
  */
- 
+
 /* Create an rtc object mebby should be private to the class JOE?? */
 
 // add preprocessor code here for non M0 systems.
@@ -96,17 +96,17 @@ Clock clock;
 
 void Clock::init()
 
-{   
+{
 
   rtc.begin(); // initialize RTC
-  
+
   // if the rtc is set in the early 00s Set the and date to build time initially
  //  otherwise assume that the battery was keeping it running appropriately.
   if (!rtc.getYear()){
      rtc.setTime(build_hours,build_minutes,build_seconds);
      rtc.setDate(build_day, build_month, build_year);
   }
-    
+
   monitor.debug("Clock module initialized");
   monitor.registerAction(_TIM_, &TIM);
   monitor.registerAction(_NOW_, &NOW);
@@ -208,10 +208,6 @@ void Clock::run() {
 
 void timeStamp ( char *buffer ) {
     sprintf(buffer,"%02d/%02d/%04d %02d:%02d:%02d",
-              clock.month(), clock.day(), clock.year(), 
+              clock.month(), clock.day(), clock.year(),
               clock.hour(), clock.minute(), clock.second());
 }
-
-
-
-
