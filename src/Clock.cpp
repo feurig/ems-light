@@ -102,7 +102,7 @@ void Clock::init()
 
   // if the rtc is set in the early 00s Set the and date to build time initially
  //  otherwise assume that the battery was keeping it running appropriately.
-  if (!rtc.getYear()){
+  if (rtc.getYear()>1){
      rtc.setTime(build_hours,build_minutes,build_seconds);
      rtc.setDate(build_day, build_month, build_year);
   }
