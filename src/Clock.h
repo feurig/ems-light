@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *-----------------------------------------------------------------------------
  *
- * 
+ *
  *
  */
 
@@ -46,7 +46,7 @@
 #define CHARS_IN_TIMESTAMP 20
 
 // add preprocessor code here for non M0 systems.
-#ifdef ARDUINO_SAMD_ZERO
+#if defined(ARDUINO_ARCH_SAMD)
 #include <RTCZero.h>
 extern RTCZero rtc;
 #endif
@@ -61,14 +61,14 @@ class Clock
 {
 private:
 
-   
+
 public:
-    
-    
+
+
     /*----------------------------------------------------------------------
      *  Monitor Callbacks
      *--------------------------------------------------------------------*/
-    
+
     static void TIM (uint8_t kwIndex, uint8_t verb,char *args) {
         static char thetimestamp[CHARS_IN_TIMESTAMP];
         if (verb == '!') {
@@ -77,7 +77,7 @@ public:
         timeStamp(thetimestamp);
         monitor.update("TIM","%s",thetimestamp);
     }
-    
+
     static void NOW (uint8_t kwIndex, uint8_t verb,char *args) {
         static char intbuff[25];
         if (verb == '!') {
@@ -85,9 +85,9 @@ public:
         }
         ultoa(clock.time(),intbuff,10);
         monitor.update("NOW","%s",intbuff);
-        
+
     }
-    
+
 
     Clock() {} ;
     void init();
@@ -95,7 +95,7 @@ public:
     void set(time_t);
     time_t get();
     void set(const char *);
-    
+
 // need to generalize this at some point.
 #if 0
     uint16_t year()  const  { return 2000 + yOff; }

@@ -51,66 +51,66 @@ class EMSConsole(wx.Frame):
         self.outSizer=wx.BoxSizer(orient=wx.VERTICAL)
         self.boxSizer1 = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.consoleSizer=wx.BoxSizer(orient=wx.VERTICAL)
-        self.consoleSizer.AddWindow(self.emsOutput, 2, border=0,flag=wx.EXPAND|wx.ALL)
-        self.consoleSizer.AddWindow(self.emsCommand, 0, border=1,
+        self.consoleSizer.Add(self.emsOutput, 2, border=0,flag=wx.EXPAND|wx.ALL)
+        self.consoleSizer.Add(self.emsCommand, 0, border=1,
                                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_LEFT)
                                  
         self.runSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.runSizer1=wx.BoxSizer(orient=wx.VERTICAL)
-        self.runSizer1.AddWindow(wx.StaticText(label=u'SEC. REMAINING',
+        self.runSizer1.Add(wx.StaticText(label=u'SEC. REMAINING',
                                                parent=self,
                                                style = wx.ALIGN_CENTER),
                                  0, border=10,
                                  flag=wx.CENTER)
-        self.runSizer1.AddWindow(self.TRM,1, border=10,
+        self.runSizer1.Add(self.TRM,1, border=10,
                                  flag=wx.EXPAND|wx.ALL)
         #self.runSizer1.AddSpacer((30,20),1)
                                  
-        self.runSizer.AddSizer(self.runSizer1,1, border=0, flag=wx.CENTER)
-        self.runSizer.AddWindow(self.RUN,0, border=0, flag=wx.CENTER)
-        self.runSizer.AddWindow(self.TMS, 1, border=0,flag=wx.EXPAND)
+        self.runSizer.Add(self.runSizer1,1, border=0, flag=wx.CENTER)
+        self.runSizer.Add(self.RUN,0, border=0, flag=wx.CENTER)
+        self.runSizer.Add(self.TMS, 1, border=0,flag=wx.EXPAND)
         #self.runSizer.AddSpacer((20,20))
         
         self.pumpSizer = wx.BoxSizer(orient=wx.VERTICAL)
-        self.pumpSizer.AddWindow(self.MUP,1, border=0, flag=wx.CENTER|wx.ALIGN_CENTER)
+        self.pumpSizer.Add(self.MUP,1, border=0, flag=wx.CENTER|wx.ALIGN_CENTER)
         self.pumpSizer2 = wx.BoxSizer(orient=wx.VERTICAL)
-        self.pumpSizer2.AddWindow(wx.StaticText(label=u'PLATE PRESSURE',
+        self.pumpSizer2.Add(wx.StaticText(label=u'PLATE PRESSURE',
                                                parent=self),
                                  0,border=0,flag=wx.CENTER)
-        self.pumpSizer2.AddWindow(self.PS1,1, border=10,
+        self.pumpSizer2.Add(self.PS1,1, border=10,
                                   flag=wx.EXPAND|wx.ALL)
                                   
-        self.pumpSizer2.AddWindow(wx.StaticText(label=u'(Approximate)',parent=self,
+        self.pumpSizer2.Add(wx.StaticText(label=u'(Approximate)',parent=self,
                                                 style = wx.ALIGN_CENTER
                                                 ),
                                   
                                   0, border=0,flag=wx.CENTER)
                                   
-        self.pumpSizer.AddSizer(self.pumpSizer2,1, border=0, flag=wx.CENTER)
-        self.pumpSizer.AddWindow(self.MDN,1, border=0, flag=wx.CENTER)
+        self.pumpSizer.Add(self.pumpSizer2,1, border=0, flag=wx.CENTER)
+        self.pumpSizer.Add(self.MDN,1, border=0, flag=wx.CENTER)
         self.pumpSizer1=wx.BoxSizer(orient=wx.HORIZONTAL)
-        self.pumpSizer1.AddWindow(self.SOL, 0, border=0, flag=wx.ALIGN_CENTER)
-        self.pumpSizer1.AddWindow(self.PMS, 0, border=0, flag=wx.ALIGN_CENTER)
-        self.pumpSizer.AddSizer(self.pumpSizer1,0, flag=wx.CENTER)
+        self.pumpSizer1.Add(self.SOL, 0, border=0, flag=wx.ALIGN_CENTER)
+        self.pumpSizer1.Add(self.PMS, 0, border=0, flag=wx.ALIGN_CENTER)
+        self.pumpSizer.Add(self.pumpSizer1,0, flag=wx.CENTER)
 
         self.tempSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.tempSizer2 = wx.BoxSizer(orient=wx.HORIZONTAL)
-        self.tempSizer2.AddWindow(self.TS1, 0, border=5,flag=wx.EXPAND|wx.BOTTOM)
-        self.tempSizer2.AddWindow(self.TS2, 0, border=5,flag=wx.EXPAND|wx.BOTTOM)
-        self.tempSizer2.AddWindow(self.TMP, 1,
+        self.tempSizer2.Add(self.TS1, 0, border=5,flag=wx.EXPAND|wx.BOTTOM)
+        self.tempSizer2.Add(self.TS2, 0, border=5,flag=wx.EXPAND|wx.BOTTOM)
+        self.tempSizer2.Add(self.TMP, 1,
                                   border=5,
                                   flag=wx.CENTER)
-        self.tempSizer2.AddSpacer((30,10))
-        self.tempSizer.AddSizer(self.tempSizer2, 1, border=1, flag=wx.CENTER)
-        self.tempSizer.AddWindow(self.HSW, 0, border=0, flag=wx.CENTER)
+        self.tempSizer2.Add(0,30,10)
+        self.tempSizer.Add(self.tempSizer2, 1, border=1, flag=wx.CENTER)
+        self.tempSizer.Add(self.HSW, 0, border=0, flag=wx.CENTER)
 
 
-        self.boxSizer1.AddSizer(self.consoleSizer, 1, border=0, flag=wx.CENTER)
-        self.boxSizer1.AddSizer(self.pumpSizer, 1, border=0, flag=wx.CENTER)
-        self.boxSizer1.AddSizer(self.runSizer, 1, border=0, flag=wx.CENTER)
-        self.boxSizer1.AddSizer(self.tempSizer, 1, border=0, flag=wx.CENTER)
-        self.outSizer.AddSizer(self.boxSizer1, 1, border=0, flag=wx.CENTER)
-        self.outSizer.AddWindow(self.statusBar1, 0, border=5, flag=wx.BOTTOM)
+        self.boxSizer1.Add(self.consoleSizer, 1, border=0, flag=wx.CENTER)
+        self.boxSizer1.Add(self.pumpSizer, 1, border=0, flag=wx.CENTER)
+        self.boxSizer1.Add(self.runSizer, 1, border=0, flag=wx.CENTER)
+        self.boxSizer1.Add(self.tempSizer, 1, border=0, flag=wx.CENTER)
+        self.outSizer.Add(self.boxSizer1, 1, border=0, flag=wx.CENTER)
+        self.outSizer.Add(self.statusBar1, 0, border=5, flag=wx.BOTTOM)
         
         self.SetSizer(self.outSizer)
 
@@ -132,7 +132,7 @@ class EMSConsole(wx.Frame):
         
         self.emsCommand = wx.TextCtrl(
               name=u'emsCommand', parent=self,
-              size=(200, 22), style=wx.TE_PROCESS_ENTER|wx.PROCESS_ENTER,
+              size=(200, 22), style=wx.TE_PROCESS_ENTER,
               value=u'')
               
         self.emsCommand.SetInsertionPoint(1)
@@ -175,7 +175,7 @@ class EMSConsole(wx.Frame):
                            + os.sep +"pause.png",
                            wx.BITMAP_TYPE_ANY)
         
-        self.RUN = wx.wx.BitmapButton(parent=self, id=wx.ID_ANY, bitmap=self.playb,
+        self.RUN = wx.BitmapButton(parent=self, id=wx.ID_ANY, bitmap=self.playb,
                                       size=(self.playb.GetWidth(),
                                             self.playb.GetHeight()),
                                       style=wx.NO_BORDER|wx.BU_EXACTFIT)
@@ -220,7 +220,7 @@ class EMSConsole(wx.Frame):
         self.upb = wx.Bitmap(os.path.dirname(os.path.realpath(__file__))
                              + os.sep +"up.png",
                              wx.BITMAP_TYPE_ANY)
-        self.MUP = wx.wx.BitmapButton(parent=self, id=wx.ID_ANY,
+        self.MUP = wx.BitmapButton(parent=self, id=wx.ID_ANY,
                                       bitmap=self.upb,
                                       size=(self.upb.GetWidth(),
                                             self.upb.GetHeight()),
@@ -231,7 +231,7 @@ class EMSConsole(wx.Frame):
         self.dnb = wx.Bitmap(os.path.dirname(os.path.realpath(__file__))
                                          + os.sep +"dn.png",
                                          wx.BITMAP_TYPE_ANY)
-        self.MDN = wx.wx.BitmapButton(parent=self, id=wx.ID_ANY, bitmap=self.dnb,
+        self.MDN = wx.BitmapButton(parent=self, id=wx.ID_ANY, bitmap=self.dnb,
                                       size=(self.dnb.GetWidth(),
                                             self.dnb.GetHeight()),
                                       style=wx.NO_BORDER|wx.BU_EXACTFIT)

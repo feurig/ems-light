@@ -48,7 +48,7 @@ def log_to_google_app(key,verb=':',value=None):
     device=application.main.device
     if value is not None and device.device_ssn_string is not None : 
         try:
-            print "LOG:(" + device.device_ssn_string + ")" + value
+            #print "LOG:(" + device.device_ssn_string + ")" + value
             ssn=device.device_ssn_string
             (timestamp,ambient,chiller1,chiller2,air1,air2,chiller,
                 fan,soh,state) = value.split(',')
