@@ -45,6 +45,7 @@
 #define DEBUG_SYNC 0
 #define CHARS_IN_TIMESTAMP 20
 
+// FIX ME !!! replace rtc with timer....
 // add preprocessor code here for non M0 systems.
 #if defined(ARDUINO_ARCH_SAMD)
 #include <RTCZero.h>
